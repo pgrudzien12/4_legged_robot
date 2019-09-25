@@ -18,12 +18,12 @@ public:
 
     void update(long timeElapsed) override
     {
+        timeElapsedInStage += timeElapsed;
         if (stage == 0)
         {
-            timeElapsedInStage += timeElapsed;
-            if (timeElapsedInStage > 20000)
+            if (timeElapsedInStage > 15000)
                 logger->log((String)"" + timeElapsedInStage);
-            if (timeElapsedInStage > 30000)
+            if (timeElapsedInStage > 20000)
             {
                 stage = 1;
                 timeElapsedInStage = 0;
@@ -41,16 +41,22 @@ public:
         }
         if (stage == 1)
         {
-            timeElapsedInStage += timeElapsed;
             if (leg2->gotDesiredAngles() && timeElapsedInStage > 2000)
             {
                 leg2->setSpeed(120, 120, 120);
+                timeElapsedInStage = 0;
                 stage = 2;
             }
             return;
         }
         if (stage == 2)
         {
+            if (timeElapsedInStage > 20000)
+            {
+                timeElapsedInStage = 0;
+                stage = 0;
+                return;
+            }
             if (leg1->gotDesiredAngles())
             {
                 int angle1 = 0;
@@ -76,25 +82,6 @@ public:
                 leg1->setDesiredAngles(angle1, angle2, angle3);
             }
         }
-
-        // if (leg2.gotDesiredAngles())
-        // {
-        //     if (angle2 == maxAngle)
-        //         angle2 = minAngle;
-        //     else
-        //         angle2 = maxAngle;
-
-        //     leg2.setDesiredAngles(angle2, -1, -1);
-        // }
-        // if (leg3.gotDesiredAngles())
-        // {
-        //     if (angle3 == maxAngle)
-        //         angle3 = minAngle;
-        //     else
-        //         angle3 = maxAngle;
-
-        //     leg3.setDesiredAngles(angle3, -1, -1);
-        //    }
     }
 
 private:
@@ -105,9 +92,6 @@ private:
     long timeElapsedInStage = 0;
 
     int leg1Stage;
-    int leg2Stage;
-    int leg3Stage;
-    int leg4Stage;
 };
 
 #endif
