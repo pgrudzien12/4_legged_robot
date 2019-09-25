@@ -15,10 +15,6 @@ unsigned long previousMillis = 0; // will store last time LED was updated
 unsigned long interval = 10;      // interval at which to blink (milliseconds)
 Logger *logger;
 Controller *controller;
-int leg1Stage = 0;
-int leg2Stage = 0;
-int leg3Stage = 0;
-int leg4Stage = 0;
 void setup()
 {
     // put your setup code here, to run once:
@@ -42,10 +38,8 @@ void setup()
     //leg1.initLog(logger);
 
     resetServos();
-    controller = new BoredRobot(leg1, leg2, leg3, leg4);
+    controller = new BoredRobot(logger, &leg1, &leg2, &leg3, &leg4);
     previousMillis = millis();
-    //leg1.setDesiredAngles(angle1, -1, -1);
-    //leg2.setDesiredAngles(angle2, -1, -1);
 }
 
 void loop()
@@ -56,61 +50,9 @@ void loop()
     {
         long timeElapsed = currentMillis - previousMillis;
         previousMillis = currentMillis;
-        updateState();
+        controller->update(timeElapsed);
 
         renderUpdate(timeElapsed);
-    }
-}
-void updateState()
-{
-    if (leg1.gotDesiredAngles())
-    {
-        int angle1 = 0;
-        int angle2 = 0;
-        int angle3 = 0;
-        if (leg1Stage == 0)
-        {
-            angle1 = 90;
-            angle2 = 50;
-            angle3 = 90;
-
-            leg1Stage = 1;
-        }
-        else
-        {
-            angle1 = 90;
-            angle2 = 40;
-            angle3 = 90;
-
-            leg1Stage = 0;
-        }
-
-        leg1.setDesiredAngles(angle1, angle2, angle3);
-    }
-
-    // if (leg2.gotDesiredAngles())
-    // {
-    //     if (angle2 == maxAngle)
-    //         angle2 = minAngle;
-    //     else
-    //         angle2 = maxAngle;
-
-    //     leg2.setDesiredAngles(angle2, -1, -1);
-    // }
-    // if (leg3.gotDesiredAngles())
-    // {
-    //     if (angle3 == maxAngle)
-    //         angle3 = minAngle;
-    //     else
-    //         angle3 = maxAngle;
-
-    //     leg3.setDesiredAngles(angle3, -1, -1);
-//    }
-    leg2.setDesiredAngles(-1, -1,30);
-    leg3.setDesiredAngles(-1, -1, -1);
-    if (leg4.gotDesiredAngles())
-    {
-        leg4.setDesiredAngles(-1, -1, 90);
     }
 }
 
