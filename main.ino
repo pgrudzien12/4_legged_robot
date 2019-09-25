@@ -3,6 +3,8 @@
 #include "leg.h"
 #include "logger.h"
 #include "serialLogger.h"
+#include "controller.h"
+#include "boredRobot.h"
 
 ServoDriver pwm = ServoDriver();
 Leg leg1;
@@ -12,19 +14,17 @@ Leg leg4;
 unsigned long previousMillis = 0; // will store last time LED was updated
 unsigned long interval = 10;      // interval at which to blink (milliseconds)
 Logger *logger;
-int maxAngle = 120;
-int minAngle = 60;
-int angle1 = 120;
-int angle2 = 120;
-int angle3 = 120;
-int angle4 = 120;
+Controller *controller;
+int leg1Stage = 0;
+int leg2Stage = 0;
+int leg3Stage = 0;
+int leg4Stage = 0;
 void setup()
 {
     // put your setup code here, to run once:
     Wire.begin();
     Serial.begin(9600);
 
-    //pwm.setPWMFreq(60);  // Analog servos run at ~60 Hz updates
     pwm.init(0x7f);
     pwm.setFrequency(60);
     delay(10);
@@ -42,9 +42,10 @@ void setup()
     //leg1.initLog(logger);
 
     resetServos();
+    controller = new BoredRobot(leg1, leg2, leg3, leg4);
     previousMillis = millis();
-    leg1.setDesiredAngles(angle1, -1, -1);
-    leg2.setDesiredAngles(angle2, -1, -1);
+    //leg1.setDesiredAngles(angle1, -1, -1);
+    //leg2.setDesiredAngles(angle2, -1, -1);
 }
 
 void loop()
@@ -64,13 +65,28 @@ void updateState()
 {
     if (leg1.gotDesiredAngles())
     {
-        if (angle1 == maxAngle)
-            angle1 = minAngle;
-        else
-            angle1 = maxAngle;
+        int angle1 = 0;
+        int angle2 = 0;
+        int angle3 = 0;
+        if (leg1Stage == 0)
+        {
+            angle1 = 90;
+            angle2 = 50;
+            angle3 = 90;
 
-        leg1.setDesiredAngles(angle1, -1, -1);
-    }    
+            leg1Stage = 1;
+        }
+        else
+        {
+            angle1 = 90;
+            angle2 = 40;
+            angle3 = 90;
+
+            leg1Stage = 0;
+        }
+
+        leg1.setDesiredAngles(angle1, angle2, angle3);
+    }
 
     // if (leg2.gotDesiredAngles())
     // {
@@ -89,16 +105,13 @@ void updateState()
     //         angle3 = maxAngle;
 
     //     leg3.setDesiredAngles(angle3, -1, -1);
-    // }    
-    // if (leg4.gotDesiredAngles())
-    // {
-    //     if (angle4 == maxAngle)
-    //         angle4 = minAngle;
-    //     else
-    //         angle4 = maxAngle;
-
-    //     leg4.setDesiredAngles(angle4, -1, -1);
-    // }
+//    }
+    leg2.setDesiredAngles(-1, -1,30);
+    leg3.setDesiredAngles(-1, -1, -1);
+    if (leg4.gotDesiredAngles())
+    {
+        leg4.setDesiredAngles(-1, -1, 90);
+    }
 }
 
 void renderUpdate(long timeElapsed)
