@@ -1,10 +1,10 @@
 #ifndef __BOREDROBOT_H__
 #define __BOREDROBOT_H__
-#include "controller.h"
+#include "behaviour.h"
 #include "leg.h"
 #include "logger.h"
 
-class BoredRobot : public Controller
+class BoredRobot : public Behaviour
 {
 public:
     BoredRobot(Logger *logger, Leg *leg1, Leg *leg2, Leg *leg3, Leg *leg4)

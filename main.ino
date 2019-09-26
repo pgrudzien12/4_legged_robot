@@ -3,7 +3,7 @@
 #include "leg.h"
 #include "logger.h"
 #include "serialLogger.h"
-#include "controller.h"
+#include "behaviour.h"
 #include "boredRobot.h"
 
 ServoDriver pwm = ServoDriver();
@@ -14,7 +14,7 @@ Leg leg4;
 unsigned long previousMillis = 0; // will store last time LED was updated
 unsigned long interval = 10;      // interval at which to blink (milliseconds)
 Logger *logger;
-Controller *controller;
+Behaviour *behaviour;
 void setup()
 {
     // put your setup code here, to run once:
@@ -38,7 +38,7 @@ void setup()
     //leg1.initLog(logger);
 
     resetServos();
-    controller = new BoredRobot(logger, &leg1, &leg2, &leg3, &leg4);
+    behaviour = new BoredRobot(logger, &leg1, &leg2, &leg3, &leg4);
     previousMillis = millis();
 }
 
@@ -50,7 +50,7 @@ void loop()
     {
         long timeElapsed = currentMillis - previousMillis;
         previousMillis = currentMillis;
-        controller->update(timeElapsed);
+        behaviour->update(timeElapsed);
 
         renderUpdate(timeElapsed);
     }
