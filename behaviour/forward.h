@@ -3,16 +3,17 @@
 #include "../behaviour.h"
 #include "../robot.h"
 
-class Forward : public Behaviour
+class ForwardBehaviour : public Behaviour
 {
 public:
-    Forward(Robot *robot)
+    ForwardBehaviour(Robot *robot)
     {
         this->robot = robot;
     }
 
     void update(long timeElapsed) override
     {
+
     }
 
 private:

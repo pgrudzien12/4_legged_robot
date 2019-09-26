@@ -43,7 +43,7 @@ void setup()
     robot = new Robot(logger, &leg1, &leg2, &leg3, &leg4);
     robot->resetServos();
     
-    behaviour = new Forward(robot);
+    behaviour = new ForwardBehaviour(robot);
     previousMillis = millis();
 }
 
