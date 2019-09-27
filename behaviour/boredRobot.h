@@ -2,18 +2,19 @@
 #define __BOREDROBOT_H__
 #include "../behaviour.h"
 #include "../leg.h"
-#include "../logging/logger.h"
+#include "../robot.h"
+#include "../logger.h"
 
 class BoredRobotBehaviour : public Behaviour
 {
 public:
-    BoredRobotBehaviour(Logger *logger, Leg *leg1, Leg *leg2, Leg *leg3, Leg *leg4)
+    BoredRobotBehaviour(Logger *logger, Robot *robot)
     {
         this->logger = logger;
-        this->leg1 = leg1;
-        this->leg2 = leg2;
-        this->leg3 = leg3;
-        this->leg4 = leg4;
+        this->leg1 = robot->GetLeg(1);
+        this->leg2 = robot->GetLeg(2);
+        this->leg3 = robot->GetLeg(3);
+        this->leg4 = robot->GetLeg(4);
     }
 
     void update(long timeElapsed) override
