@@ -2,7 +2,7 @@
 #include <PCA9685.h>
 #include "leg.h"
 #include "logger.h"
-#include "serialLogger.h"
+#include "logging/serialLogger.h"
 #include "behaviour.h"
 #include "robot.h"
 #include "behaviour/forward.h"

@@ -1,5 +1,5 @@
 #include "leg.h"
-#include "emptyLogger.h"
+#include "logging/emptyLogger.h"
 
 void Leg::init(ServoDriver *driver, byte feet, byte knee, byte hip)
 {
