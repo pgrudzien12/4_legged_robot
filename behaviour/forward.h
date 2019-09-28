@@ -2,22 +2,20 @@
 #define __FORWARD_H_
 #include "../behaviour.h"
 #include "../robot.h"
+#include "../logger.h"
 
 class ForwardBehaviour : public Behaviour
 {
 public:
-    ForwardBehaviour(Robot *robot)
+    ForwardBehaviour(Logger *logger, Robot *robot) 
+        : Behaviour(logger, robot)
     {
-        this->robot = robot;
     }
 
-    void update(long timeElapsed) override
+    void update(long ) override
     {
 
     }
-
-private:
-    Robot *robot;
 };
 
 #endif // __FORWARD_H_

@@ -8,9 +8,9 @@
 class BoredRobotBehaviour : public Behaviour
 {
 public:
-    BoredRobotBehaviour(Logger *logger, Robot *robot)
+    BoredRobotBehaviour(Logger *logger, Robot *robot) 
+        : Behaviour(logger, robot)
     {
-        this->logger = logger;
         this->leg1 = robot->GetLeg(1);
         this->leg2 = robot->GetLeg(2);
         this->leg3 = robot->GetLeg(3);
@@ -87,7 +87,6 @@ public:
 
 private:
     Leg *leg1, *leg2, *leg3, *leg4;
-    Logger *logger;
 
     int stage = 0;
     long timeElapsedInStage = 0;

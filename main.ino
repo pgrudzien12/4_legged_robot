@@ -7,6 +7,7 @@
 #include "robot.h"
 #include "behaviour/forward.h"
 #include "behaviour/boredRobot.h"
+#include "behaviour/balance.h"
 
 ServoDriver pwm = ServoDriver();
 Leg leg1;
@@ -44,7 +45,7 @@ void setup()
     robot = new Robot(logger, &leg1, &leg2, &leg3, &leg4);
     robot->resetServos();
     
-    behaviour = new BoredRobotBehaviour(logger, robot);
+    behaviour = new BalanceBehaviour(logger, robot);
     previousMillis = millis();
 }
 
