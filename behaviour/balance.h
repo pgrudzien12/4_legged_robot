@@ -10,33 +10,6 @@ public:
     {
     }
 
-    void update(long timeElapsed) override
-    {
-        timeElapsedInStage += timeElapsed;
-        if (stage == 0)
-        {
-            setStablePose();
-            stage = 1 timeElapsedInStage = 0;
-        }
-        else if (stage == 1)
-        {
-            if (timeElapsedInStage >= 100)
-            {
-                stage = 2;
-                timeElapsedInStage = 0;
-                setBalanceForward();
-            }
-        }
-        else if (stage == 2)
-        {
-            if (gotDesiredPose())
-            {
-                stage = 3;
-                timeElapsedInStage = 0;
-            }
-        }
-    }
-
 private: // functions
     void setStablePose()
     {
@@ -46,7 +19,7 @@ private: // functions
         robot->GetLeg(4)->setDesiredAngles(90, 90, 90);
     }
 
-    void setBalanceOnLegPose(int leg)
+    void setBalanceForward()
     {
         robot->GetLeg(1)->setDesiredAngles(60, 120, 60);
         robot->GetLeg(2)->setDesiredAngles(90, 60, 90);
@@ -54,8 +27,15 @@ private: // functions
         robot->GetLeg(4)->setDesiredAngles(90, 90, 120);
     }
 
-    void gotDesiredPose(int leg)
+    bool gotDesiredPose()
     {
+        for (int i = 0; i < 4; i++)
+        {
+            if (!robot->GetLeg(i+1)->gotDesiredAngles())
+                return false;
+        }
+
+        return true;
     }
 
     bool inServoRange(float angle)
@@ -98,8 +78,6 @@ private: // functions
 
     float* calcAngles(float x, float y, float z)
     {
-        const float calf = 7;
-        const float thigh = 6.2;
         const float hip = 4.5;
 
         float alpha = atan(x / y);
@@ -108,7 +86,39 @@ private: // functions
         float q1, q2;
         IK(mi, z, &q1, &q2);
 
-        return float[3]{(alpha + PI / 4) * RAD_TO_DEG, q1 * RAD_TO_DEG, q2 * RAD_TO_DEG};
+        float *result = new float[3];
+        result[0] = (alpha + PI / 4) * RAD_TO_DEG;
+        result[1] = q1 * RAD_TO_DEG;
+        result[2] = q2 * RAD_TO_DEG;
+        return result;
+    }
+public:
+    void update(long timeElapsed) override
+    {
+        timeElapsedInStage += timeElapsed;
+        if (stage == 0)
+        {
+            setStablePose();
+            stage = 1;
+            timeElapsedInStage = 0;
+        }
+        else if (stage == 1)
+        {
+            if (timeElapsedInStage >= 100)
+            {
+                stage = 2;
+                timeElapsedInStage = 0;
+                setBalanceForward();
+            }
+        }
+        else if (stage == 2)
+        {
+            if (gotDesiredPose())
+            {
+                stage = 3;
+                timeElapsedInStage = 0;
+            }
+        }
     }
 
 private: // data

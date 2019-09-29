@@ -15,7 +15,7 @@ protected:
 public:
     virtual void update(long timeElapsed) = 0;
 
-private:
+protected:
     Robot *robot;
     Logger *logger;
 };
