@@ -34,10 +34,9 @@ private: // functions
         robot->GetLeg(3)->setDesiredAngles(90 + q1, 90 + q2, 90 + q3);
     }
 
-    
     void setBalanceBackwards()
     {
-        float q1,q2,q3;
+        float q1, q2, q3;
         q1 = 26;
         q2 = -32;
         q3 = -0;
@@ -53,9 +52,22 @@ private: // functions
 
     void setBalanceDown()
     {
-        float q1,q2,q3;
-        q1 = 44;
-        q2 = -30;
+        float q1, q2, q3;
+        q1 = 69;
+        q2 = -49;
+        q3 = 0;
+        robot->GetLeg(1)->setDesiredAngles(90 - q1, 90 + q2, 90 + q3);
+        robot->GetLeg(4)->setDesiredAngles(90 + q1, 90 - q2, 90 - q3);
+        robot->GetLeg(2)->setDesiredAngles(90 + q1, 90 - q2, 90 - q3);
+        robot->GetLeg(3)->setDesiredAngles(90 - q1, 90 + q2, 90 + q3);
+    }
+
+    
+    void setBalanceUp()
+    {
+        float q1, q2, q3;
+        q1 = -45;
+        q2 = 45;
         q3 = 0;
         robot->GetLeg(1)->setDesiredAngles(90 - q1, 90 + q2, 90 + q3);
         robot->GetLeg(4)->setDesiredAngles(90 + q1, 90 - q2, 90 - q3);
@@ -72,6 +84,14 @@ private: // functions
         }
 
         return true;
+    }
+
+    void setSpeetTTF(float ttf)
+    {
+        for (int i = 1; i <= 4; i++)
+        {
+            robot->GetLeg(i)->setSpeedTTF(ttf);
+        }
     }
 
     bool inServoRange(float angle)
@@ -145,6 +165,7 @@ public:
                 stage = 2;
                 timeElapsedInStage = 0;
                 setBalanceForward();
+                setSpeetTTF(0.2);
             }
         }
         else if (stage == 2)
@@ -154,6 +175,7 @@ public:
                 stage = 3;
                 timeElapsedInStage = 0;
                 setStablePose();
+                setSpeetTTF(0.5);
             }
         }
         else if (stage == 3)
@@ -163,15 +185,37 @@ public:
                 stage = 4;
                 timeElapsedInStage = 0;
                 setBalanceBackwards();
+                setSpeetTTF(0.2);
             }
         }
         else if (stage == 4)
         {
-            if (timeElapsedInStage >= 5000 && gotDesiredPose())
+            if (timeElapsedInStage >= 2500 && gotDesiredPose())
+            {
+                stage = 5;
+                timeElapsedInStage = 0;
+                setStablePose();
+                setSpeetTTF(0.5);
+            }
+        }
+        else if (stage == 5)
+        {
+            if (timeElapsedInStage >= 2500 && gotDesiredPose())
+            {
+                stage = 6;
+                timeElapsedInStage = 0;
+                setBalanceDown();
+                setSpeetTTF(0.8);
+            }
+        }
+        else if (stage == 6)
+        {
+            if (timeElapsedInStage >= 2500 && gotDesiredPose())
             {
                 stage = 1;
-                timeElapsedInStage = 2;
+                timeElapsedInStage = 0;
                 setStablePose();
+                setSpeetTTF(0.3);
             }
         }
     }

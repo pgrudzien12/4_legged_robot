@@ -32,6 +32,17 @@ void Leg::initLog(Logger *logger)
     this->logger = logger;
 }
 
+void Leg::setSpeedTTF(float timeToFinish)
+{
+    //this->logger->log((String) "TTF:");
+    //logger->log((String)"TTF " + timeToFinish);
+    for (int i = 0; i < 3; i++)
+    {
+        float angleToTurn = abs(desiredAngle[i] - currentAngle[i]);
+        dps[i] = angleToTurn / timeToFinish;
+    }
+}
+
 void Leg::setSpeedDPS(float feet, float knee, float hip)
 {
     if (feet > 0)
@@ -76,15 +87,6 @@ void Leg::update(unsigned long timeElapsed)
         if (desiredAngle[i] != currentAngle[i])
         {
             float turnAngle = (timeElapsed / 1000.0) * (dps[i]);
-
-            String tastatus = (String) "turn Angle=" + turnAngle;
-            String dastatus = (String) "desiredAngle=" + desiredAngle[i];
-            String castatus = (String) "currentAngle=" + currentAngle[i];
-
-            this->logger->log((String) "Joint no:" + i);
-            this->logger->log(tastatus);
-            this->logger->log(dastatus);
-            this->logger->log(castatus);
 
             if (desiredAngle[i] > currentAngle[i])
             {

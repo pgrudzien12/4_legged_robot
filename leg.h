@@ -15,6 +15,13 @@ public:
     void initLog(Logger *logger);
 
     void setSpeedDPS(float feet, float knee, float hip);
+    
+/**
+ *
+ * Sets the speed of the motors to finish at the desired moment.
+ * 
+ */
+    void setSpeedTTF(float timeToFinish);
 
     void setDesiredAngles(float *angles);
     void setDesiredAngles(float feet, float knee, float hip);

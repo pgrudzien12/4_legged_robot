@@ -17,18 +17,23 @@ public:
 
     void executeStep(long timeElapsed)
     {
-        for(int i = 0; i<4; i++)
+        for (int i = 0; i < 4; i++)
             leg[i]->update(timeElapsed);
     }
 
     void resetServos()
     {
-        for(int i = 0; i<4; i++)
+        for (int i = 0; i < 4; i++)
             leg[i]->reset();
     }
 
     Leg *GetLeg(int i)
     {
+        if (i < 1 || i > 4)
+        {
+            logger->log("wrong leg !!");
+            return this->leg[0];
+        }
         return this->leg[i - 1];
     }
 

@@ -38,7 +38,10 @@ void setup()
     leg4.calibrateHip(10);
 
     logger = new SerialLogger();
-    //leg1.initLog(logger);
+    leg1.initLog(logger);
+    leg2.initLog(logger);
+    leg3.initLog(logger);
+    leg4.initLog(logger);
 
     robot = new Robot(logger, &leg1, &leg2, &leg3, &leg4);
     robot->resetServos();
