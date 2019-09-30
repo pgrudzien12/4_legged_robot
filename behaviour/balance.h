@@ -39,7 +39,7 @@ private: // functions
         float q1, q2, q3;
         q1 = 26;
         q2 = -32;
-        q3 = -0;
+        q3 = -11;
         robot->GetLeg(1)->setDesiredAngles(90 + q1, 90 + q2, 90 + q3);
         robot->GetLeg(4)->setDesiredAngles(90 - q1, 90 - q2, 90 - q3);
 
