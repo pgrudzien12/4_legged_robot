@@ -28,7 +28,7 @@ public:
             {
                 stage = 1;
                 timeElapsedInStage = 0;
-                leg2->setSpeed(120, 120, 60);
+                leg2->setSpeedDPS(120, 120, 60);
                 leg2->setDesiredAngles(-1, -1, 30);
             }
             else
@@ -44,7 +44,7 @@ public:
         {
             if (leg2->gotDesiredAngles() && timeElapsedInStage > 2000)
             {
-                leg2->setSpeed(120, 120, 120);
+                leg2->setSpeedDPS(120, 120, 120);
                 timeElapsedInStage = 0;
                 stage = 2;
             }

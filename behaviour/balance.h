@@ -21,17 +21,53 @@ private: // functions
 
     void setBalanceForward()
     {
-        robot->GetLeg(1)->setDesiredAngles(60, 120, 60);
-        robot->GetLeg(2)->setDesiredAngles(90, 60, 90);
-        robot->GetLeg(3)->setDesiredAngles(110, 90, 90);
-        robot->GetLeg(4)->setDesiredAngles(90, 90, 120);
+        float q1 = 52;
+        float q2 = -25;
+        float q3 = 17;
+        robot->GetLeg(1)->setDesiredAngles(90 - q1, 90 + q2, 90 + q3);
+        robot->GetLeg(4)->setDesiredAngles(90 + q1, 90 - q2, 90 - q3);
+
+        q1 = 26;
+        q2 = -32;
+        q3 = -11;
+        robot->GetLeg(2)->setDesiredAngles(90 - q1, 90 - q2, 90 - q3);
+        robot->GetLeg(3)->setDesiredAngles(90 + q1, 90 + q2, 90 + q3);
+    }
+
+    
+    void setBalanceBackwards()
+    {
+        float q1,q2,q3;
+        q1 = 26;
+        q2 = -32;
+        q3 = -0;
+        robot->GetLeg(1)->setDesiredAngles(90 + q1, 90 + q2, 90 + q3);
+        robot->GetLeg(4)->setDesiredAngles(90 - q1, 90 - q2, 90 - q3);
+
+        q1 = 52;
+        q2 = -25;
+        q3 = 17;
+        robot->GetLeg(2)->setDesiredAngles(90 + q1, 90 - q2, 90 - q3);
+        robot->GetLeg(3)->setDesiredAngles(90 - q1, 90 + q2, 90 + q3);
+    }
+
+    void setBalanceDown()
+    {
+        float q1,q2,q3;
+        q1 = 44;
+        q2 = -30;
+        q3 = 0;
+        robot->GetLeg(1)->setDesiredAngles(90 - q1, 90 + q2, 90 + q3);
+        robot->GetLeg(4)->setDesiredAngles(90 + q1, 90 - q2, 90 - q3);
+        robot->GetLeg(2)->setDesiredAngles(90 + q1, 90 - q2, 90 - q3);
+        robot->GetLeg(3)->setDesiredAngles(90 - q1, 90 + q2, 90 + q3);
     }
 
     bool gotDesiredPose()
     {
         for (int i = 0; i < 4; i++)
         {
-            if (!robot->GetLeg(i+1)->gotDesiredAngles())
+            if (!robot->GetLeg(i + 1)->gotDesiredAngles())
                 return false;
         }
 
@@ -45,7 +81,7 @@ private: // functions
 
     void IK(float x, float y, float *q1_out, float *q2_out)
     {
-        // tak a note that this is a different reference system (for x,y) than in calcAngles 
+        // tak a note that this is a different reference system (for x,y) than in calcAngles
         const float calf = 7;
         const float thigh = 6.2;
         float L1 = thigh;
@@ -60,8 +96,8 @@ private: // functions
 
         if (inServoRange(q1 + PI / 4) && inServoRange(q2 + PI / 4))
         {
-            (*q1_out) = q1 + PI / 4;
-            (*q2_out) = q2 + PI / 4;
+            (*q1_out) = q1 - PI / 4;
+            (*q2_out) = q2 - PI / 4;
             return;
         }
         else
@@ -70,13 +106,13 @@ private: // functions
 
             q1_up = L2 * sin(q2_sol2);
 
-            (*q1_out) = atan(y / x) - asin(q1_up / q1_down) + PI / 4;
-            (*q2_out) = q2_sol2 + PI / 4;
+            (*q1_out) = atan(y / x) - asin(q1_up / q1_down) - PI / 4;
+            (*q2_out) = q2_sol2 - PI / 4;
             return;
         }
     }
 
-    float* calcAngles(float x, float y, float z)
+    void calcAngles(float x, float y, float z, float *result)
     {
         const float hip = 4.5;
 
@@ -86,16 +122,16 @@ private: // functions
         float q1, q2;
         IK(mi, z, &q1, &q2);
 
-        float *result = new float[3];
         result[0] = (alpha + PI / 4) * RAD_TO_DEG;
         result[1] = q1 * RAD_TO_DEG;
         result[2] = q2 * RAD_TO_DEG;
-        return result;
     }
+
 public:
     void update(long timeElapsed) override
     {
         timeElapsedInStage += timeElapsed;
+        //setBalanceForward();
         if (stage == 0)
         {
             setStablePose();
@@ -104,7 +140,7 @@ public:
         }
         else if (stage == 1)
         {
-            if (timeElapsedInStage >= 100)
+            if (timeElapsedInStage >= 2500)
             {
                 stage = 2;
                 timeElapsedInStage = 0;
@@ -113,10 +149,29 @@ public:
         }
         else if (stage == 2)
         {
-            if (gotDesiredPose())
+            if (timeElapsedInStage >= 5000 && gotDesiredPose())
             {
                 stage = 3;
                 timeElapsedInStage = 0;
+                setStablePose();
+            }
+        }
+        else if (stage == 3)
+        {
+            if (timeElapsedInStage >= 2500)
+            {
+                stage = 4;
+                timeElapsedInStage = 0;
+                setBalanceBackwards();
+            }
+        }
+        else if (stage == 4)
+        {
+            if (timeElapsedInStage >= 5000 && gotDesiredPose())
+            {
+                stage = 1;
+                timeElapsedInStage = 2;
+                setStablePose();
             }
         }
     }

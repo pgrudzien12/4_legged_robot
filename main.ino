@@ -34,10 +34,8 @@ void setup()
     leg2.init(&pwm, 4, 5, 6);
     leg3.init(&pwm, 9, 11, 10);
     leg4.init(&pwm, 16, 15, 14);
-    leg1.calibrateHip(60);
-    leg2.calibrateHip(-20);
-    leg3.calibrateHip(20);
-    leg4.calibrateHip(20);
+
+    leg4.calibrateHip(10);
 
     logger = new SerialLogger();
     //leg1.initLog(logger);

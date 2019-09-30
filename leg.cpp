@@ -10,7 +10,7 @@ void Leg::init(ServoDriver *driver, byte feet, byte knee, byte hip)
     this->servoMap[KNEE] = knee;
     this->servoMap[HIP] = hip;
     const int defaultSpeed = 120; // degrees per second
-    this->setSpeed(defaultSpeed, defaultSpeed, defaultSpeed);
+    this->setSpeedDPS(defaultSpeed, defaultSpeed, defaultSpeed);
 
     this->driver = driver;
     this->logger = new EmptyLogger();
@@ -32,16 +32,28 @@ void Leg::initLog(Logger *logger)
     this->logger = logger;
 }
 
-void Leg::setSpeed(float feetDPS, float kneeDPS, float hipDPS)
+void Leg::setSpeedDPS(float feet, float knee, float hip)
 {
-    if (feetDPS > 0)
-        dps[FEET] = feetDPS;
+    if (feet > 0)
+        dps[FEET] = feet;
 
-    if (kneeDPS > 0)
-        dps[KNEE] = kneeDPS;
+    if (knee > 0)
+        dps[KNEE] = knee;
 
-    if (hipDPS > 0)
-        dps[HIP] = hipDPS;
+    if (hip > 0)
+        dps[HIP] = hip;
+}
+
+void Leg::setDesiredAngles(float *angles)
+{
+    if (angles[0] > 0)
+        desiredAngle[FEET] = feet;
+
+    if (angles[1] > 0)
+        desiredAngle[KNEE] = knee;
+
+    if (angles[2] > 0)
+        desiredAngle[HIP] = hip;
 }
 
 void Leg::setDesiredAngles(float feet, float knee, float hip)

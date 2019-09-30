@@ -14,8 +14,9 @@ public:
     void init(ServoDriver *driver, byte feet, byte knee, byte hip);
     void initLog(Logger *logger);
 
-    void setSpeed(float feetDPS, float kneeDPS, float hipDPS);
+    void setSpeedDPS(float feet, float knee, float hip);
 
+    void setDesiredAngles(float *angles);
     void setDesiredAngles(float feet, float knee, float hip);
 
     bool gotDesiredAngles();
