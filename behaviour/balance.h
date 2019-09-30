@@ -53,8 +53,8 @@ private: // functions
     void setBalanceDown()
     {
         float q1, q2, q3;
-        q1 = 69;
-        q2 = -49;
+        q1 = 86;
+        q2 = -80;
         q3 = 0;
         robot->GetLeg(1)->setDesiredAngles(90 - q1, 90 + q2, 90 + q3);
         robot->GetLeg(4)->setDesiredAngles(90 + q1, 90 - q2, 90 - q3);
