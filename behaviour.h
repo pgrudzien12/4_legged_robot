@@ -2,6 +2,8 @@
 #define __BEHAVIOUR_H__
 #include "robot.h"
 #include "logger.h"
+#include "messageInterpreter.h"
+#include "behaviour/defaultMessageInterpreter.h"
 
 class Behaviour
 {
@@ -97,11 +99,19 @@ protected:
 
 public:
     virtual void update(long timeElapsed) = 0;
+    MessageInterpreter *getMessageInterpreter() {
+        if (messageInterpreter == NULL){
+            messageInterpreter = new DefaultMessageInterpreter();
+        }
+
+        return messageInterpreter;
+    };
 
 
 protected:
     Robot *robot;
     Logger *logger;
+    MessageInterpreter *messageInterpreter;
 };
 
 #endif

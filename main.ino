@@ -8,17 +8,22 @@
 #include "behaviour/forward.h"
 #include "behaviour/boredRobot.h"
 #include "behaviour/balance.h"
+#include "controller.h"
+#include "controller/serialController.h"
+
+#define DEFAULTINTERVAL 10
 
 ServoDriver pwm = ServoDriver();
 Leg leg1;
 Leg leg2;
 Leg leg3;
 Leg leg4;
-unsigned long previousMillis = 0; // will store last time LED was updated
-unsigned long interval = 10;      // interval at which to blink (milliseconds)
+unsigned long previousMillis = 0;
+long long interval = DEFAULTINTERVAL;
 Logger *logger;
 Robot *robot;
-Behaviour *behaviour;
+//Behaviour *behaviour;
+Controller *controller;
 
 void setup()
 {
@@ -45,26 +50,26 @@ void setup()
 
     robot = new Robot(logger, &leg1, &leg2, &leg3, &leg4);
     robot->resetServos();
-    
-    behaviour = new BalanceBehaviour(logger, robot);
+
+    controller = new SerialController(Serial, logger, robot);
     previousMillis = millis();
 }
 
 void loop()
 {
     unsigned long currentMillis = millis();
+    Behaviour *behaviour = controller->getBehaviour();
 
     if (currentMillis - previousMillis > interval)
     {
-        long timeElapsed = currentMillis - previousMillis;
+        unsigned long timeElapsed = currentMillis - previousMillis;
+        interval = DEFAULTINTERVAL - (currentMillis - previousMillis - interval);
         previousMillis = currentMillis;
-        
-        behaviour->update(timeElapsed);
 
-        robot->executeStep(timeElapsed);
+        if (interval > 0)
+        {
+            behaviour->update(timeElapsed);
+            robot->executeStep(timeElapsed);
+        }
     }
 }
-
-
-
-

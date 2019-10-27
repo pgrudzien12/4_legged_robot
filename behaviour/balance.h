@@ -1,6 +1,7 @@
 #ifndef __BALANCE_H
 #define __BALANCE_H
 #include "../behaviour.h"
+#include "balanceMessageInterpreter.h"
 
 class BalanceBehaviour : public Behaviour
 {
@@ -8,10 +9,10 @@ public:
     BalanceBehaviour(Logger *logger, Robot *robot)
         : Behaviour(logger, robot)
     {
+        this->messageInterpreter = new BalanceMessageInterpreter(this);
     }
 
 private: // functions
-
 
     bool inServoRange(float angle)
     {
@@ -65,9 +66,6 @@ private: // functions
         result[1] = q1 * RAD_TO_DEG;
         result[2] = q2 * RAD_TO_DEG;
     }
-
-
-
 
 public:
     void update(long timeElapsed) override

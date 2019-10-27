@@ -2,5 +2,5 @@
     "sketch": "main.ino",
     "board": "arduino:avr:micro",
     "output": "../build",
-    "port": "COM4"
+    "port": "COM9"
 }
