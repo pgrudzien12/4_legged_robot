@@ -6,7 +6,7 @@
 #include "../behaviour/balance.h"
 #include "../logger.h"
 #include "../robot.h"
-#include "../messageInterpreter.h"
+#include "../behaviour/balanceMessage.h"
 
 class SerialController : public Controller
 {
@@ -24,11 +24,9 @@ public:
         if (this->serial.available())
         {
             int inByte = this->serial.read();
-            MessageInterpreter *messageInterpreter = this->behaviour->getMessageInterpreter();
-            if (messageInterpreter->interpret(inByte))
-            {
-                behaviour->onMessage(messageInterpreter.getMessage());
-            }
+            BalanceMessage message(inByte);
+            behaviour->onMessage(message);
+
             logger->log("got message");
         }
 

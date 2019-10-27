@@ -1,7 +1,7 @@
 #ifndef __BALANCE_H
 #define __BALANCE_H
 #include "../behaviour.h"
-#include "balanceMessageInterpreter.h"
+#include "balanceMessage.h"
 
 class BalanceBehaviour : public Behaviour
 {
@@ -9,7 +9,6 @@ public:
     BalanceBehaviour(Logger *logger, Robot *robot)
         : Behaviour(logger, robot)
     {
-        this->messageInterpreter = new BalanceMessageInterpreter(this);
     }
 
 private: // functions
@@ -60,7 +59,7 @@ private: // functions
         float w = sqrt(x * x + y * y);
         float mi = w - hip;
         float q1, q2;
-        IK(mi, z, &q1, &q2);
+        IK(mi, z, &q1, &q2) ;
 
         result[0] = (alpha + PI / 4) * RAD_TO_DEG;
         result[1] = q1 * RAD_TO_DEG;
@@ -68,6 +67,11 @@ private: // functions
     }
 
 public:
+    void onMessage(BalanceMessage message)
+    {
+        
+    }
+    
     void update(long timeElapsed) override
     {
         timeElapsedInStage += timeElapsed;
