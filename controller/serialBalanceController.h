@@ -7,6 +7,7 @@
 #include "../logger.h"
 #include "../robot.h"
 #include "../behaviour/keyboardMessage.h"
+#include "../serialProtocol.h"
 
 class SerialBalanceController : public Controller
 {
@@ -21,15 +22,10 @@ public:
 
     Behaviour *getBehaviour() override
     {
-        if (this->serial->available())
+        KeyboardMessage message = receive(Serial);
+        if (message.isCorrectMessage())
         {
-            char buffer[10];
-            int length = this->serial->readBytesUntil((char)0, buffer, 10);
-            if (length == 1)
-            {
-                KeyboardMessage message((int)buffer[0]);
-                behaviour->onMessage(message);
-            }
+            behaviour->onMessage(message);
         }
 
         return this->behaviour;

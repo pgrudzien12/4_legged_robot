@@ -10,6 +10,7 @@
 #include "behaviour/balance.h"
 #include "controller.h"
 #include "controller/serialBalanceController.h"
+#include "serialProtocol.h"
 
 #define DEFAULTINTERVAL 10
 
@@ -58,15 +59,9 @@ void setup()
 
 void loop()
 {
-    // if (Serial.available())
+    // KeyboardMessage message = receive(Serial);
+    // if (message.isCorrectMessage())
     // {
-    //     char buffer[10];
-    //     int length = Serial.readBytesUntil((char)0, buffer, 10);
-    //     if (length != 1)
-    //         return;
-
-    //     KeyboardMessage message((int)buffer[0]);
-
     //     Serial.write(message.isUpPressed());
     //     Serial.write(message.isDownPressed());
     //     Serial.write(message.isLeftPressed());
