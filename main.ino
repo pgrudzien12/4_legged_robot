@@ -9,7 +9,7 @@
 #include "behaviour/boredRobot.h"
 #include "behaviour/balance.h"
 #include "controller.h"
-#include "controller/serialController.h"
+#include "controller/serialBalanceController.h"
 
 #define DEFAULTINTERVAL 10
 
@@ -51,7 +51,7 @@ void setup()
     robot = new Robot(logger, &leg1, &leg2, &leg3, &leg4);
     robot->resetServos();
 
-    controller = new SerialController(&Serial, logger, robot);
+    controller = new SerialBalanceController(&Serial, logger, robot);
     previousMillis = millis();
 }
 

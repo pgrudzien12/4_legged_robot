@@ -1,5 +1,5 @@
-#ifndef __SERIALCONTROLLER_H_
-#define __SERIALCONTROLLER_H_
+#ifndef __SERIALBALANCECONTROLLER_H_
+#define __SERIALBALANCECONTROLLER_H_
 #include "USBAPI.h"
 #include "../controller.h"
 #include "../behaviour.h"
@@ -8,10 +8,10 @@
 #include "../robot.h"
 #include "../behaviour/balanceMessage.h"
 
-class SerialController : public Controller
+class SerialBalanceController : public Controller
 {
 public:
-    SerialController(Serial_ *serial, Logger *logger, Robot *robot)
+    SerialBalanceController(Serial_ *serial, Logger *logger, Robot *robot)
     {
         this->serial = serial;
         this->logger = logger;
@@ -40,4 +40,4 @@ private:
     BalanceBehaviour *behaviour;
 };
 
-#endif //__SERIALCONTROLLER_H_
+#endif //__SERIALBALANCECONTROLLER_H_
