@@ -4,43 +4,76 @@
 class HidMessage
 {
 private:
-    int data;
+    byte byte0;
+    byte byte1;
+    byte byte2;
+    byte byte3;
+    byte byte4;
+    byte byte5;
+    byte byte6;
+    byte byte7;
 public:
-    HidMessage(int data);
+    HidMessage();
+    HidMessage(char buffer[6]);
     ~HidMessage();
 
     bool isUpPressed(){
-        return (data & (byte)64) > 0;
+        return (byte1 & (byte)8) > 0;
     }
     
     bool isDownPressed(){
-        return (data & (byte)32) > 0;
+        return (byte1 & (byte)4) > 0;
     }
     
     bool isLeftPressed(){
-        return (data & (byte)16) > 0;
+        return (byte1 & (byte)2) > 0;
     }
         
     bool isRightPressed(){
-        return (data & (byte)8) > 0;
+        return (byte1 & (byte)1) > 0;
     }
 
     bool isCtrlPressed(){
-        return (data & (byte)4) > 0;
+        return (byte0 & (byte)1) > 0;
+    }
+    bool isShiftPressed(){
+        return (byte0 & (byte)2) > 0;
+    }
+    bool isAltPressed(){
+        return (byte0 & (byte)4) > 0;
     }
 
     bool noArrowPressed(){
-        return (data & (byte)120) == 0;
+        return (byte1 & (byte)15) == 0;
     }
 
     bool isCorrectMessage(){
-        return (data & (byte)1) == 1;
+        return (byte0 & (byte)128) > 0;
     }
 };
 
-HidMessage::HidMessage(int data)
+HidMessage::HidMessage(char buffer[6])
 {
-    this->data = data;
+    this->byte0 = (byte)buffer[0];
+    this->byte1 = (byte)buffer[1];
+    this->byte2 = (byte)buffer[2];
+    this->byte3 = (byte)buffer[3];
+    this->byte4 = (byte)buffer[4];
+    this->byte5 = (byte)buffer[5];
+    this->byte6 = (byte)buffer[6];
+    this->byte7 = (byte)buffer[7];
+}
+
+HidMessage::HidMessage()
+{
+    this->byte0 = (byte)0;
+    this->byte1 = (byte)0;
+    this->byte2 = (byte)0;
+    this->byte3 = (byte)0;
+    this->byte4 = (byte)0;
+    this->byte5 = (byte)0;
+    this->byte6 = (byte)0;
+    this->byte7 = (byte)0;
 }
 
 HidMessage::~HidMessage()

@@ -3,18 +3,23 @@
 #include "USBAPI.h"
 #include "hidMessage.h"
 
-HidMessage receive(Serial_ &serial){
+HidMessage receive(Serial_ &serial)
+{
     if (serial.available())
     {
-        char buffer[10];
-        int length = serial.readBytesUntil((char)0, buffer, 10);
-        if (length != 1)
-            return HidMessage(0);
+        char buffer[9];
+        int length = serial.readBytesUntil((char)0, buffer, 9);
+        if (length != 8)
+        {
+            serial.println("bad message");
+            return HidMessage();
+        }
 
-        HidMessage message((int)buffer[0]);
+        HidMessage message(buffer);
         return message;
     }
-    return HidMessage(0);
+
+    return HidMessage();
 }
 
 #endif

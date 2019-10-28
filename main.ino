@@ -59,7 +59,7 @@ void setup()
 
 void loop()
 {
-    // KeyboardMessage message = receive(Serial);
+    // HidMessage message = receive(Serial);
     // if (message.isCorrectMessage())
     // {
     //     Serial.write(message.isUpPressed());
