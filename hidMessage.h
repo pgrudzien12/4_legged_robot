@@ -1,13 +1,13 @@
-#ifndef __KEYBOARDMESSAGE_H__
-#define __KEYBOARDMESSAGE_H__
+#ifndef __HIDMESSAGE_H__
+#define __HIDMESSAGE_H__
 
-class KeyboardMessage
+class HidMessage
 {
 private:
     int data;
 public:
-    KeyboardMessage(int data);
-    ~KeyboardMessage();
+    HidMessage(int data);
+    ~HidMessage();
 
     bool isUpPressed(){
         return (data & (byte)64) > 0;
@@ -38,12 +38,12 @@ public:
     }
 };
 
-KeyboardMessage::KeyboardMessage(int data)
+HidMessage::HidMessage(int data)
 {
     this->data = data;
 }
 
-KeyboardMessage::~KeyboardMessage()
+HidMessage::~HidMessage()
 {
 }
 

@@ -6,7 +6,7 @@
 #include "../behaviour/balance.h"
 #include "../logger.h"
 #include "../robot.h"
-#include "../behaviour/keyboardMessage.h"
+#include "../hidMessage.h"
 #include "../serialProtocol.h"
 
 class SerialBalanceController : public Controller
@@ -22,7 +22,7 @@ public:
 
     Behaviour *getBehaviour() override
     {
-        KeyboardMessage message = receive(Serial);
+        HidMessage message = receive(Serial);
         if (message.isCorrectMessage())
         {
             behaviour->onMessage(message);
