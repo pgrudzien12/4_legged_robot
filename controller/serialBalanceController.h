@@ -6,7 +6,7 @@
 #include "../behaviour/balance.h"
 #include "../logger.h"
 #include "../robot.h"
-#include "../behaviour/balanceMessage.h"
+#include "../behaviour/keyboardMessage.h"
 
 class SerialBalanceController : public Controller
 {
@@ -23,11 +23,13 @@ public:
     {
         if (this->serial->available())
         {
-            int inByte = this->serial->read();
-            BalanceMessage message(inByte);
-            behaviour->onMessage(message);
-
-            logger->log("got message");
+            char buffer[10];
+            int length = this->serial->readBytesUntil((char)0, buffer, 10);
+            if (length == 1)
+            {
+                KeyboardMessage message((int)buffer[0]);
+                behaviour->onMessage(message);
+            }
         }
 
         return this->behaviour;

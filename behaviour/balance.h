@@ -1,7 +1,7 @@
 #ifndef __BALANCE_H
 #define __BALANCE_H
 #include "../behaviour.h"
-#include "balanceMessage.h"
+#include "keyboardMessage.h"
 
 class BalanceBehaviour : public Behaviour
 {
@@ -66,7 +66,7 @@ private: // functions
     }
 
 public:
-    void onMessage(BalanceMessage message)
+    void onMessage(KeyboardMessage message)
     {
         if (!message.isCorrectMessage())
             return;
@@ -80,7 +80,7 @@ public:
             setBalanceBackwards();
         else if (message.isLeftPressed())
             setBalanceDown();
-            
+
         if (message.isCtrlPressed())
             setSpeetTTF(0.2);
         else

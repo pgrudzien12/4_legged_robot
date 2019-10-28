@@ -30,6 +30,7 @@ void setup()
     // put your setup code here, to run once:
     Wire.begin();
     Serial.begin(115200);
+    Serial.setTimeout(100);
 
     pwm.init(0x7f);
     pwm.setFrequency(60);
@@ -59,8 +60,12 @@ void loop()
 {
     // if (Serial.available())
     // {
-    //     int r = Serial.read();
-    //     BalanceMessage message(r);
+    //     char buffer[10];
+    //     int length = Serial.readBytesUntil((char)0, buffer, 10);
+    //     if (length != 1)
+    //         return;
+
+    //     KeyboardMessage message((int)buffer[0]);
 
     //     Serial.write(message.isUpPressed());
     //     Serial.write(message.isDownPressed());

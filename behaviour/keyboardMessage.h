@@ -1,13 +1,13 @@
-#ifndef __BALANCEMESSAGE_H__
-#define __BALANCEMESSAGE_H__
+#ifndef __KEYBOARDMESSAGE_H__
+#define __KEYBOARDMESSAGE_H__
 
-class BalanceMessage
+class KeyboardMessage
 {
 private:
     int data;
 public:
-    BalanceMessage(int data);
-    ~BalanceMessage();
+    KeyboardMessage(int data);
+    ~KeyboardMessage();
 
     bool isUpPressed(){
         return (data & (byte)64) > 0;
@@ -38,12 +38,12 @@ public:
     }
 };
 
-BalanceMessage::BalanceMessage(int data)
+KeyboardMessage::KeyboardMessage(int data)
 {
     this->data = data;
 }
 
-BalanceMessage::~BalanceMessage()
+KeyboardMessage::~KeyboardMessage()
 {
 }
 
