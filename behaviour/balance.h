@@ -12,7 +12,6 @@ public:
     }
 
 private: // functions
-
     bool inServoRange(float angle)
     {
         return angle > 0 and angle < 3.14;
@@ -59,7 +58,7 @@ private: // functions
         float w = sqrt(x * x + y * y);
         float mi = w - hip;
         float q1, q2;
-        IK(mi, z, &q1, &q2) ;
+        IK(mi, z, &q1, &q2);
 
         result[0] = (alpha + PI / 4) * RAD_TO_DEG;
         result[1] = q1 * RAD_TO_DEG;
@@ -69,79 +68,27 @@ private: // functions
 public:
     void onMessage(BalanceMessage message)
     {
-        
-    }
-    
-    void update(long timeElapsed) override
-    {
-        timeElapsedInStage += timeElapsed;
-        //setBalanceForward();
-        if (stage == 0)
-        {
+        if (!message.isCorrectMessage())
+            return;
+
+
+        if (message.noArrowPressed())
             setStablePose();
-            stage = 1;
-            timeElapsedInStage = 0;
-        }
-        else if (stage == 1)
-        {
-            if (timeElapsedInStage >= 2500)
-            {
-                stage = 2;
-                timeElapsedInStage = 0;
-                setBalanceForward();
-                setSpeetTTF(0.2);
-            }
-        }
-        else if (stage == 2)
-        {
-            if (timeElapsedInStage >= 5000 && gotDesiredPose())
-            {
-                stage = 3;
-                timeElapsedInStage = 0;
-                setStablePose();
-                setSpeetTTF(0.5);
-            }
-        }
-        else if (stage == 3)
-        {
-            if (timeElapsedInStage >= 2500)
-            {
-                stage = 4;
-                timeElapsedInStage = 0;
-                setBalanceBackwards();
-                setSpeetTTF(0.2);
-            }
-        }
-        else if (stage == 4)
-        {
-            if (timeElapsedInStage >= 2500 && gotDesiredPose())
-            {
-                stage = 5;
-                timeElapsedInStage = 0;
-                setStablePose();
-                setSpeetTTF(0.5);
-            }
-        }
-        else if (stage == 5)
-        {
-            if (timeElapsedInStage >= 2500 && gotDesiredPose())
-            {
-                stage = 6;
-                timeElapsedInStage = 0;
-                setBalanceDown();
-                setSpeetTTF(0.8);
-            }
-        }
-        else if (stage == 6)
-        {
-            if (timeElapsedInStage >= 2500 && gotDesiredPose())
-            {
-                stage = 1;
-                timeElapsedInStage = 0;
-                setStablePose();
-                setSpeetTTF(0.3);
-            }
-        }
+        else if (message.isUpPressed())
+            setBalanceForward();
+        else if (message.isDownPressed())
+            setBalanceBackwards();
+        else if (message.isLeftPressed())
+            setBalanceDown();
+            
+        if (message.isCtrlPressed())
+            setSpeetTTF(0.2);
+        else
+            setSpeetTTF(0.5);
+    }
+
+    void update(long /* timeElapsed */) override
+    {
     }
 
 private: // data

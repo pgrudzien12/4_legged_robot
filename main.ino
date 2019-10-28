@@ -29,7 +29,7 @@ void setup()
 {
     // put your setup code here, to run once:
     Wire.begin();
-    Serial.begin(9600);
+    Serial.begin(115200);
 
     pwm.init(0x7f);
     pwm.setFrequency(60);
@@ -51,12 +51,29 @@ void setup()
     robot = new Robot(logger, &leg1, &leg2, &leg3, &leg4);
     robot->resetServos();
 
-    controller = new SerialController(Serial, logger, robot);
+    controller = new SerialController(&Serial, logger, robot);
     previousMillis = millis();
 }
 
 void loop()
 {
+    // if (Serial.available())
+    // {
+    //     int r = Serial.read();
+    //     BalanceMessage message(r);
+
+    //     Serial.write(message.isUpPressed());
+    //     Serial.write(message.isDownPressed());
+    //     Serial.write(message.isLeftPressed());
+    //     Serial.write(message.isRightPressed());
+    //     Serial.write(message.isCtrlPressed());
+    //     Serial.write((byte)0);
+    //     Serial.write(message.isCorrectMessage());
+    //     Serial.write((byte)2);
+    //     Serial.write(message.noArrowPressed());
+    //     Serial.write((byte)32);
+    // }
+
     unsigned long currentMillis = millis();
     Behaviour *behaviour = controller->getBehaviour();
 

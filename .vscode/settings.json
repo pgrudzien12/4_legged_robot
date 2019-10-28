@@ -2,6 +2,10 @@
     "files.associations": {
         "system_error": "cpp",
         "cmath": "cpp",
-        "complex": "cpp"
+        "complex": "cpp",
+        "array": "cpp",
+        "string": "cpp",
+        "string_view": "cpp",
+        "*.tcc": "cpp"
     }
 }

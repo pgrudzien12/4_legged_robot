@@ -11,7 +11,7 @@
 class SerialController : public Controller
 {
 public:
-    SerialController(Serial_ serial, Logger *logger, Robot *robot)
+    SerialController(Serial_ *serial, Logger *logger, Robot *robot)
     {
         this->serial = serial;
         this->logger = logger;
@@ -21,9 +21,9 @@ public:
 
     Behaviour *getBehaviour() override
     {
-        if (this->serial.available())
+        if (this->serial->available())
         {
-            int inByte = this->serial.read();
+            int inByte = this->serial->read();
             BalanceMessage message(inByte);
             behaviour->onMessage(message);
 
@@ -34,7 +34,7 @@ public:
     };
 
 private:
-    Serial_ serial;
+    Serial_ *serial;
     Logger *logger;
     Robot *robot;
     BalanceBehaviour *behaviour;
