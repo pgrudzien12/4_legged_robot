@@ -57,23 +57,26 @@ void setup()
     previousMillis = millis();
 }
 
+//#define TESTHID
 void loop()
 {
-    // HidMessage message = receive(Serial);
-    // if (message.isCorrectMessage())
-    // {
-    //     Serial.write(message.isUpPressed());
-    //     Serial.write(message.isDownPressed());
-    //     Serial.write(message.isLeftPressed());
-    //     Serial.write(message.isRightPressed());
-    //     Serial.write(message.isCtrlPressed());
-    //     Serial.write((byte)0);
-    //     Serial.write(message.isCorrectMessage());
-    //     Serial.write((byte)2);
-    //     Serial.write(message.noArrowPressed());
-    //     Serial.write((byte)32);
-    // }
-
+#ifdef TESTHID
+    HidMessage message = receive(Serial);
+    if (message.isCorrectMessage())
+    {
+        Serial.write(message.isUpPressed());
+        Serial.write(message.isDownPressed());
+        Serial.write(message.isLeftPressed());
+        Serial.write(message.isRightPressed());
+        Serial.write(message.isCtrlPressed());
+        Serial.write((byte)0);
+        Serial.write(message.isCorrectMessage());
+        Serial.write((byte)2);
+        Serial.write(message.noArrowPressed());
+        Serial.write((byte)32);
+    }
+    return;
+#endif
     unsigned long currentMillis = millis();
     Behaviour *behaviour = controller->getBehaviour();
 
