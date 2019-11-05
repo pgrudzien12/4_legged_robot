@@ -22,33 +22,83 @@ protected:
 
     void setBalanceForward()
     {
-        float q1 = 52;
-        float q2 = -25;
-        float q3 = 17;
+        float q1, q2, q3;
+        q1 = 54;
+        q2 = -21;
+        q3 = 45;
         robot->GetLeg(1)->setDesiredAngles(90 - q1, 90 + q2, 90 + q3);
         robot->GetLeg(4)->setDesiredAngles(90 + q1, 90 - q2, 90 - q3);
 
-        q1 = 26;
-        q2 = -32;
-        q3 = -11;
-        robot->GetLeg(2)->setDesiredAngles(90 - q1, 90 - q2, 90 - q3);
-        robot->GetLeg(3)->setDesiredAngles(90 + q1, 90 + q2, 90 + q3);
+        q1 = -13;
+        q2 = -21;
+        q3 = -18;
+        robot->GetLeg(2)->setDesiredAngles(90 + q1, 90 - q2, 90 - q3);
+        robot->GetLeg(3)->setDesiredAngles(90 - q1, 90 + q2, 90 + q3);
     }
 
     void setBalanceBackwards()
     {
         float q1, q2, q3;
-        q1 = 26;
-        q2 = -32;
-        q3 = -11;
-        robot->GetLeg(1)->setDesiredAngles(90 + q1, 90 + q2, 90 + q3);
-        robot->GetLeg(4)->setDesiredAngles(90 - q1, 90 - q2, 90 - q3);
+        q1 = -13;
+        q2 = -21;
+        q3 = -18;
+        robot->GetLeg(1)->setDesiredAngles(90 - q1, 90 + q2, 90 + q3);
+        robot->GetLeg(4)->setDesiredAngles(90 + q1, 90 - q2, 90 - q3);
 
-        q1 = 52;
-        q2 = -25;
-        q3 = 17;
+        q1 = 54;
+        q2 = -21;
+        q3 = 45;
         robot->GetLeg(2)->setDesiredAngles(90 + q1, 90 - q2, 90 - q3);
         robot->GetLeg(3)->setDesiredAngles(90 - q1, 90 + q2, 90 + q3);
+    }
+
+    void setBalanceLeft()
+    {
+        float q1, q2, q3;
+        q1 = 54;
+        q2 = -21;
+        q3 = -45;
+        robot->GetLeg(1)->setDesiredAngles(90 - q1, 90 + q2, 90 + q3);
+
+        q1 = 54;
+        q2 = -21;
+        q3 = -45;
+        robot->GetLeg(2)->setDesiredAngles(90 + q1, 90 - q2, 90 - q3);
+
+        q1 = -14;
+        q2 = -20;
+        q3 = 18;
+        robot->GetLeg(3)->setDesiredAngles(90 - q1, 90 + q2, 90 + q3);
+
+        q1 = -14;
+        q2 = -20;
+        q3 = 18;
+        robot->GetLeg(4)->setDesiredAngles(90 + q1, 90 - q2, 90 - q3);
+    }
+
+
+    void setBalanceRight()
+    {
+        float q1, q2, q3;
+        q1 = -14;
+        q2 = -20;
+        q3 = 18;
+        robot->GetLeg(1)->setDesiredAngles(90 - q1, 90 + q2, 90 + q3);
+
+        q1 = -14;
+        q2 = -20;
+        q3 = 18;
+        robot->GetLeg(2)->setDesiredAngles(90 + q1, 90 - q2, 90 - q3);
+
+        q1 = 54;
+        q2 = -21;
+        q3 = -45;
+        robot->GetLeg(3)->setDesiredAngles(90 - q1, 90 + q2, 90 + q3);
+
+        q1 = 54;
+        q2 = -21;
+        q3 = -45;
+        robot->GetLeg(4)->setDesiredAngles(90 + q1, 90 - q2, 90 - q3);
     }
 
     void setBalanceDown()

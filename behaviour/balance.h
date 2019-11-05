@@ -71,20 +71,30 @@ public:
         if (!message.isCorrectMessage())
             return;
 
-
         if (message.noArrowPressed())
             setStablePose();
-        else if (message.isUpPressed())
-            setBalanceForward();
-        else if (message.isDownPressed())
-            setBalanceBackwards();
-        else if (message.isLeftPressed())
-            setBalanceDown();
+
+        if (message.isShiftPressed())
+        {
+            if (message.isUpPressed())
+                setBalanceForward();
+            else if (message.isDownPressed())
+                setBalanceBackwards();
+            else if (message.isLeftPressed())
+                setBalanceLeft();
+            else if (message.isRightPressed())
+                setBalanceRight();
+        } else {
+            if (message.isUpPressed())
+                setBalanceUp();
+            else if (message.isDownPressed())
+                setBalanceDown();
+        }
 
         if (message.isCtrlPressed())
-            setSpeetTTF(0.2);
+            setSpeetTTF(0.1);
         else
-            setSpeetTTF(0.5);
+            setSpeetTTF(0.3);
     }
 
     void update(long /* timeElapsed */) override
