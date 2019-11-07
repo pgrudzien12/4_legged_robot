@@ -11,6 +11,7 @@
 #include "controller.h"
 #include "controller/serialBalanceController.h"
 #include "serialProtocol.h"
+#include "balanceCalculator.h"
 
 #define DEFAULTINTERVAL 10
 

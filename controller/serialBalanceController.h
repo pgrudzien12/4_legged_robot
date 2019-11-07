@@ -18,8 +18,8 @@ public:
         this->serial = serial;
         this->logger = logger;
         this->robot = robot;
-        //this->behaviour = new CalculatorBehaviour(logger, robot);
-        this->behaviour = new BalanceBehaviour(logger, robot);
+        this->behaviour = new CalculatorBehaviour(logger, robot);
+        //this->behaviour = new BalanceBehaviour(logger, robot);
     }
 
     Behaviour *getBehaviour() override
@@ -37,8 +37,8 @@ private:
     Serial_ *serial;
     Logger *logger;
     Robot *robot;
-    //CalculatorBehaviour *behaviour;
-    BalanceBehaviour *behaviour;
+    CalculatorBehaviour *behaviour;
+    //BalanceBehaviour *behaviour;
 };
 
 #endif //__SERIALBALANCECONTROLLER_H_
