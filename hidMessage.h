@@ -4,6 +4,13 @@
 class HidMessage
 {
 private:
+
+    //
+    // 10000000 10000000 10000000 10000000 10000000 10000000 10000000 10000000
+    // byte0    byte1    byte2    byte3    byte4    byte5    byte6    byte7
+    // Modifier Arrows   ???      ???      Analog0X Analog0Y Analog1X Analog1Y
+    //
+
     byte byte0;
     byte byte1;
     byte byte2;
@@ -49,6 +56,22 @@ public:
 
     bool isCorrectMessage(){
         return (byte0 & (byte)128) > 0;
+    }
+    
+    int getX(){
+        return (byte4 & (byte)127);
+    }
+    
+    int getY(){
+        return (byte5 & (byte)127);
+    }
+    
+    int getRotationX(){
+        return (byte6 & (byte)127);
+    }
+
+    int getRotationY(){
+        return (byte7 & (byte)127);
     }
 };
 

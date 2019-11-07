@@ -36,6 +36,54 @@ protected:
         robot->GetLeg(3)->setDesiredAngles(90 - q1, 90 + q2, 90 + q3);
     }
 
+    void setBalanceForwardLeft()
+    {
+        float q1, q2, q3;
+        q1 = 56;
+        q2 = -10;
+        q3 = 0;
+        robot->GetLeg(1)->setDesiredAngles(90 - q1, 90 + q2, 90 + q3);
+
+        q1 = 37;
+        q2 = -32;
+        q3 = 26;
+        robot->GetLeg(4)->setDesiredAngles(90 + q1, 90 - q2, 90 - q3);
+
+        q1 = 2;
+        q2 = -26;
+        q3 = 0;
+        robot->GetLeg(3)->setDesiredAngles(90 - q1, 90 + q2, 90 + q3);
+
+        q1 = 37;
+        q2 = -32;
+        q3 = -26;
+        robot->GetLeg(2)->setDesiredAngles(90 + q1, 90 - q2, 90 - q3);
+    }
+
+    void setBalanceForwardRight()
+    {
+        float q1, q2, q3;
+        q1 = 37;
+        q2 = -32;
+        q3 = 26;
+        robot->GetLeg(1)->setDesiredAngles(90 - q1, 90 + q2, 90 + q3);
+
+        q1 = 56;
+        q2 = -10;
+        q3 = 0;
+        robot->GetLeg(4)->setDesiredAngles(90 + q1, 90 - q2, 90 - q3);
+
+        q1 = 37;
+        q2 = -32;
+        q3 = -26;
+        robot->GetLeg(3)->setDesiredAngles(90 - q1, 90 + q2, 90 + q3);
+
+        q1 = 2;
+        q2 = -26;
+        q3 = 0;
+        robot->GetLeg(2)->setDesiredAngles(90 + q1, 90 - q2, 90 - q3);
+    }
+
     void setBalanceBackwards()
     {
         float q1, q2, q3;
@@ -51,7 +99,72 @@ protected:
         robot->GetLeg(2)->setDesiredAngles(90 + q1, 90 - q2, 90 - q3);
         robot->GetLeg(3)->setDesiredAngles(90 - q1, 90 + q2, 90 + q3);
     }
+    void setBalanceBackwardsLeft()
+    {
+        // calc angles for [3.18198052 9.38198052 8.38406204]
+        // leg1=[ 37. -32. -26.]
+        // calc angles for [9.38198052 9.38198052 8.38406204]
+        // leg4=[  2. -26.   0.]
+        // calc angles for [9.38198052 3.18198052 8.38406204]
+        // leg3=[ 37. -32.  26.]
+        // calc angles for [3.18198052 3.18198052 8.38406204]
+        // leg2=[ 56. -10.   0.]
 
+        float q1, q2, q3;
+        q1 = 37;
+        q2 = -32;
+        q3 = -26;
+        robot->GetLeg(1)->setDesiredAngles(90 - q1, 90 + q2, 90 + q3);
+
+        q1 = 2;
+        q2 = -26;
+        q3 = 0;
+        robot->GetLeg(4)->setDesiredAngles(90 + q1, 90 - q2, 90 - q3);
+
+        q1 = 37;
+        q2 = -32;
+        q3 = 26;
+        robot->GetLeg(3)->setDesiredAngles(90 - q1, 90 + q2, 90 + q3);
+
+        q1 = 56;
+        q2 = -10;
+        q3 = 0;
+        robot->GetLeg(2)->setDesiredAngles(90 + q1, 90 - q2, 90 - q3);
+    }
+
+    void setBalanceBackwardsRight()
+    {
+        // calc angles for [9.38198052 9.38198052 8.38406204]
+        // leg1=[  2. -26.   0.]
+        // calc angles for [3.18198052 9.38198052 8.38406204]
+        // leg4=[ 37. -32. -26.]
+        // calc angles for [3.18198052 3.18198052 8.38406204]
+        // leg3=[ 56. -10.   0.]
+        // calc angles for [9.38198052 3.18198052 8.38406204]
+        // leg2=[ 37. -32.  26.]
+
+        float q1, q2, q3;
+        q1 = 2;
+        q2 = -26;
+        q3 = 0;
+        robot->GetLeg(1)->setDesiredAngles(90 - q1, 90 + q2, 90 + q3);
+
+        q1 = 37;
+        q2 = -32;
+        q3 = -26;
+        robot->GetLeg(4)->setDesiredAngles(90 + q1, 90 - q2, 90 - q3);
+
+        q1 = 56;
+        q2 = -10;
+        q3 = 0;
+        robot->GetLeg(3)->setDesiredAngles(90 - q1, 90 + q2, 90 + q3);
+
+        q1 = 37;
+        q2 = -32;
+        q3 = 26;
+        robot->GetLeg(2)->setDesiredAngles(90 + q1, 90 - q2, 90 - q3);
+    }
+    
     void setBalanceLeft()
     {
         float q1, q2, q3;
@@ -75,7 +188,6 @@ protected:
         q3 = 18;
         robot->GetLeg(4)->setDesiredAngles(90 + q1, 90 - q2, 90 - q3);
     }
-
 
     void setBalanceRight()
     {
@@ -113,7 +225,6 @@ protected:
         robot->GetLeg(3)->setDesiredAngles(90 - q1, 90 + q2, 90 + q3);
     }
 
-    
     void setBalanceUp()
     {
         float q1, q2, q3;

@@ -76,14 +76,22 @@ public:
 
         if (message.isShiftPressed())
         {
-            if (message.isUpPressed())
+            if (message.isUpPressed() && !message.isLeftPressed() && !message.isRightPressed())
                 setBalanceForward();
-            else if (message.isDownPressed())
+            else if (message.isUpPressed() && message.isLeftPressed())
+                setBalanceForwardLeft();
+            else if (message.isUpPressed() && message.isRightPressed())
+                setBalanceForwardRight();
+            else if (message.isDownPressed() && !message.isLeftPressed() && !message.isRightPressed())
                 setBalanceBackwards();
-            else if (message.isLeftPressed())
-                setBalanceLeft();
+            else if (message.isDownPressed() && message.isLeftPressed())
+                setBalanceBackwardsLeft();
+            else if (message.isDownPressed() && message.isRightPressed())
+                setBalanceBackwardsRight();
             else if (message.isRightPressed())
                 setBalanceRight();
+            else if (message.isLeftPressed())
+                setBalanceLeft();
         } else {
             if (message.isUpPressed())
                 setBalanceUp();

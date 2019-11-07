@@ -17,6 +17,11 @@ public:
     {
         Serial.println(message);
     }
+
+    void log(const bool message) override
+    {
+        Serial.println(message ? "1" : "0");
+    }
 };
 
 #endif

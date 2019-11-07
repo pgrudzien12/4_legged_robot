@@ -12,6 +12,9 @@ public:
     void log(const String) override
     {
     }
+    void log(const bool) override
+    {
+    }
 };
 
 #endif

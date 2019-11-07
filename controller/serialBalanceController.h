@@ -4,6 +4,7 @@
 #include "../controller.h"
 #include "../behaviour.h"
 #include "../behaviour/balance.h"
+#include "../behaviour/calculator.h"
 #include "../logger.h"
 #include "../robot.h"
 #include "../hidMessage.h"
@@ -17,6 +18,7 @@ public:
         this->serial = serial;
         this->logger = logger;
         this->robot = robot;
+        //this->behaviour = new CalculatorBehaviour(logger, robot);
         this->behaviour = new BalanceBehaviour(logger, robot);
     }
 
@@ -35,6 +37,7 @@ private:
     Serial_ *serial;
     Logger *logger;
     Robot *robot;
+    //CalculatorBehaviour *behaviour;
     BalanceBehaviour *behaviour;
 };
 
