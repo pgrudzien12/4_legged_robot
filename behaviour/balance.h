@@ -74,7 +74,7 @@ public:
         if (message.noArrowPressed())
             setStablePose();
 
-        if (message.isShiftPressed())
+        if (!message.isShiftPressed())
         {
             if (message.isUpPressed() && !message.isLeftPressed() && !message.isRightPressed())
                 setBalanceForward();
